@@ -5,18 +5,25 @@ require_relative "../lib/board"
 describe Board do
   let(:cellx) { double("cell", value: "X") }
   let(:cello) { double("cell", value: "O") }
-  let(:cellb) { double("cell", value: "") }
+  let(:cellb) { double("cell", value: 1) }
 
   describe "#initiate" do
     subject(:game_board) { described_class.new }
     let(:cell_double) { double(Cell) }
+
     context "when initialized with no board" do
+      let(:default_array) { [1, 2, 3, 4, 5, 6, 7, 8, 9] }
+
       it "creates a 9 element array" do
         expect(game_board.gameboard.size).to eq(9)
       end
 
-      it "array element is a Cell" do
+      it "every array element is a Cell" do
         expect(game_board.gameboard).to all(be_a(Cell))
+      end
+
+      it "cell values are 1 - 9" do
+        expect(game_board.gameboard.map(&:value)).to eq(default_array)
       end
     end
   end
@@ -25,6 +32,7 @@ describe Board do
     context "when game is tied" do
       let(:tied_gameboard) { [cello, cellx, cello, cellx, cellx, cello, cellx, cello, cellx] }
       subject(:full_board) { described_class.new(tied_gameboard) }
+
       it "returns true" do
         expect(full_board.game_over?).to be true
       end

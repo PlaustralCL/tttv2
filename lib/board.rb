@@ -6,7 +6,7 @@ require_relative "cell"
 class Board
   attr_reader :gameboard, :winner
 
-  def initialize(gameboard = Array.new(9) { Cell.new })
+  def initialize(gameboard = Array.new(9) { |i| Cell.new(value: i + 1) })
     @gameboard = gameboard
     @winner = ""
   end
@@ -16,7 +16,7 @@ class Board
   end
 
   def full_board?
-    gameboard.none? { |cell| cell.value == "" }
+    gameboard.none? { |cell| cell.value.is_a?(Integer) || cell.value == "" }
   end
 
   def winner?
