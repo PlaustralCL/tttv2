@@ -43,4 +43,8 @@ class Board
     @winner = board_values.select { |row| row.join == "XXX" || row.join == "OOO" }.join
     winner == "XXX" || winner == "OOO"
   end
+
+  def update_board(cell, marker)
+    gameboard[cell].update_value(marker)
+  end
 end

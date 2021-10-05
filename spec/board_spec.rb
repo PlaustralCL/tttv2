@@ -146,10 +146,31 @@ describe Board do
         expect(no_diag_winner.diagonal_winner?).to be false
       end
     end
-
   end
 
+  describe "#update_board" do
+    subject(:game_board) { described_class.new }
+    let(:cell_double) { double(Cell) }
 
+    context "when an X is added" do
+      let(:add_x) { [1, 2, 3, 4, "X", 6, 7, 8, 9] }
+
+      it "only changes one cell to X" do
+        game_board.update_board(4, "X")
+        expect(game_board.gameboard.map(&:value)).to eq(add_x)
+      end
+    end
+
+    context "when an O is added" do
+      let(:add_o) { [1, 2, 3, 4, 5, 6, 7, 8, "O"] }
+
+      it "only changes one cell to O" do
+        game_board.update_board(8, "O")
+        expect(game_board.gameboard.map(&:value)).to eq(add_o)
+
+      end
+    end
+  end
 
 
 end
