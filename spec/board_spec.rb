@@ -9,7 +9,6 @@ describe Board do
 
   describe "#initiate" do
     subject(:game_board) { described_class.new }
-    let(:cell_double) { double(Cell) }
 
     context "when initialized with no board" do
       let(:default_array) { [1, 2, 3, 4, 5, 6, 7, 8, 9] }
@@ -24,6 +23,11 @@ describe Board do
 
       it "cell values are 1 - 9" do
         expect(game_board.gameboard.map(&:value)).to eq(default_array)
+      end
+
+      it "creates an array with 9 cell doubles" do
+        expect(Cell).to receive(:new).exactly(9).times
+        described_class.new
       end
     end
   end
@@ -149,13 +153,15 @@ describe Board do
   end
 
   describe "#update_board" do
-    subject(:game_board) { described_class.new }
-    let(:cell_double) { double(Cell) }
+    let(:blank_board) { [cellb, cellb, cellb, cellb, cellb, cellb, cellb, cellb, cellb] }
+    subject(:game_board) { described_class.new(blank_board) }
 
     context "when an X is added" do
       let(:add_x) { [1, 2, 3, 4, "X", 6, 7, 8, 9] }
 
       it "only changes one cell to X" do
+        allow(cellb).to receive(:value).and_return(1, 2, 3, 4, "X", 6, 7, 8, 9)
+        allow(cellb).to receive(:update_value)
         game_board.update_board(4, "X")
         expect(game_board.gameboard.map(&:value)).to eq(add_x)
       end
@@ -165,6 +171,8 @@ describe Board do
       let(:add_o) { [1, 2, 3, 4, 5, 6, 7, 8, "O"] }
 
       it "only changes one cell to O" do
+        allow(cellb).to receive(:value).and_return(1, 2, 3, 4, 5, 6, 7, 8, "O")
+        allow(cellb).to receive(:update_value)
         game_board.update_board(8, "O")
         expect(game_board.gameboard.map(&:value)).to eq(add_o)
 
@@ -174,3 +182,6 @@ describe Board do
 
 
 end
+
+# Look at the spec/15a in the practice repo for example of testing that
+# a message is sent.
