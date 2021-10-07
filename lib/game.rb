@@ -14,8 +14,13 @@ class Game
     @player2 = player2
   end
 
-  def valid_input?(number)
-    number.match?(/^[1-9]$/)
+  # def valid_input?(number)
+  #   number.match?(/^[1-9]$/)
+  # end
+
+  def verify_input(user_input, choices = board.available_cells)
+    choices << "q"
+    return user_input if choices.map(&:to_s).include?(user_input)
   end
 
 
@@ -24,7 +29,7 @@ class Game
 
   def player_input
     puts "Please select a number (1 - 9) that is available for your turn"
-    gets.chomp
+    gets.chomp.downcase
   end
 
 
