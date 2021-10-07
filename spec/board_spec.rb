@@ -180,6 +180,18 @@ describe Board do
     end
   end
 
+  describe "#available_cells" do
+    let(:partial_board) { [cellb, cellb, cellb, cellb, cellb, cellb, cellb, cellb, cellb] }
+    subject(:mid_game) { described_class.new(partial_board) }
+    context "when some moves are taken" do
+      let(:result) { [2, 3, 4, 6, 7, 8] }
+
+      it "returns list of open cells" do
+        allow(cellb).to receive(:value).and_return("O", 2, 3, 4, "X", 6, 7, 8, "X")
+        expect(mid_game.available_cells).to eq(result)
+      end
+    end
+  end
 
 end
 
