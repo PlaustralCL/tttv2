@@ -52,4 +52,50 @@ describe Game do
       end
     end
   end
+
+  describe "#player_turn" do
+    subject(:game_loop) { described_class.new(board: board_double, player1: player1, player2: player2) }
+    let(:choices) { [2, 3, 4, 6, 7, 8] }
+
+    context "when user input is valid" do
+      it "stops loop and does not recieve error message" do
+        valid_input = "3"
+        allow(board_double).to receive(:available_cells).and_return(choices)
+        allow(game_loop).to receive(:player_input).and_return(valid_input)
+        expect(game_loop).not_to receive(:puts).with("Input Error! Please use one of the following choices: 2, 3, 4, 6, 7, 8, q")
+        game_loop.player_turn
+      end
+    end
+
+    context "when user input enters incorrect choice once, then a valid choice" do
+      let(:choices1) { [2, 3, 4, 6, 7, 8] }
+      let(:choices2) { [2, 3, 4, 6, 7, 8] }
+      it "completes loops and displays error message once" do
+        letter = "d"
+        valid_input = "3"
+        allow(board_double).to receive(:available_cells).and_return(choices1, choices2)
+        allow(game_loop).to receive(:player_input).and_return(letter, valid_input)
+        expect(game_loop).to receive(:puts).with("Input Error! Please use one of the following choices: 2, 3, 4, 6, 7, 8, q").once
+        game_loop.player_turn
+      end
+    end
+
+    context "when user inputs two incorrect values, then a valid input" do
+      let(:choices1) { [2, 3, 4, 6, 7, 8] }
+      let(:choices2) { [2, 3, 4, 6, 7, 8] }
+      let(:choices3) { [2, 3, 4, 6, 7, 8] }
+      let(:choices4) { [2, 3, 4, 6, 7, 8] }
+      it "completes loops and displays error message twice" do
+        letter = "d"
+        taken_cell = "5"
+        valid_input = "3"
+        allow(board_double).to receive(:available_cells).and_return(choices1, choices2, choices3, choices4)
+        allow(game_loop).to receive(:player_input).and_return(letter, taken_cell, valid_input)
+        expect(game_loop).to receive(:puts).with("Input Error! Please use one of the following choices: 2, 3, 4, 6, 7, 8, q").twice
+        game_loop.player_turn
+      end
+    end
+  end
+
+
 end

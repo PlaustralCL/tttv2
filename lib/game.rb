@@ -2,7 +2,7 @@
 
 # Control the flow of the game by coordinating the other classes
 class Game
-  attr_reader :board, :player1, :player2
+  attr_reader :board, :player1, :player2, :guess
 
   def initialize(
     board: Board.new,
@@ -14,9 +14,14 @@ class Game
     @player2 = player2
   end
 
-  # def valid_input?(number)
-  #   number.match?(/^[1-9]$/)
-  # end
+  def player_turn
+    loop do
+      input = verify_input(player_input)
+      return input if input
+
+      puts "Input Error! Please use one of the following choices: #{board.available_cells.push("q").join(", ")}"
+    end
+  end
 
   def verify_input(user_input, choices = board.available_cells)
     choices << "q"
