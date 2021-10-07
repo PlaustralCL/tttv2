@@ -49,9 +49,6 @@ class Board
   end
 
   def available_cells
-    # gameboard.select { |cell| cell.value.is_a?(Integer) }
-    # The code above should work, but rspec seemed to have trouble with 'select'.
-    # The final line seems convoluted, but it was able to be tested.
-    gameboard.map(&:value).join.scan(/\d/).map(&:to_i)
+    gameboard.map(&:value).select { |value| value.is_a?(Integer) }
   end
 end
