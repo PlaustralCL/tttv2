@@ -122,13 +122,17 @@ describe Game do
     end
 
     context "when two rounds are played before game over" do
+      let(:display) { double("display") }
       it "calls game_over? three times before exiting" do
         allow(board_double).to receive(:game_over?).and_return(false, false, true)
+        allow(game_play).to receive_messages(play_one_round: nil, introduction: nil, final_message: nil)
+        allow(game_play).to receive(:puts)
         expect(board_double).to receive(:game_over?).exactly(3).times
         game_play.play_game
       end
     end
   end
+
 
 
 

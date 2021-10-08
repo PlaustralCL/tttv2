@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+require_relative "board"
+require_relative "display"
+require_relative "player"
+require_relative "cell"
+
 # Control the flow of the game by coordinating the other classes
 class Game
   attr_reader :board, :player1, :player2, :guess
@@ -15,13 +20,15 @@ class Game
   end
 
   def play_game
-    # introduction
+    introduction
+    puts Display.new.create_visual_board
     play_one_round until board.game_over?
-    # final_message
+    final_message
   end
 
   def play_one_round
-
+    player_turn
+    puts Display.new(board: board_values).create_visual_board
   end
 
   def player_turn
@@ -38,7 +45,7 @@ class Game
     return user_input if choices.map(&:to_s).include?(user_input)
   end
 
-  def board_values(grid = board)
+  def board_values(grid = board.gameboard)
     grid.map(&:value)
   end
 
