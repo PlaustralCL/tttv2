@@ -116,6 +116,7 @@ describe Game do
     context "when game is over" do
       it "calls game_over only once" do
         allow(board_double).to receive(:game_over?).and_return(true)
+        allow(game_play).to receive_messages(play_one_round: nil, introduction: nil, final_message: nil, show_board: nil)
         expect(board_double).to receive(:game_over?).once
         game_play.play_game
       end
@@ -125,10 +126,15 @@ describe Game do
       let(:display) { double("display") }
       it "calls game_over? three times before exiting" do
         allow(board_double).to receive(:game_over?).and_return(false, false, true)
-        allow(game_play).to receive_messages(play_one_round: nil, introduction: nil, final_message: nil)
-        allow(game_play).to receive(:puts)
+        allow(game_play).to receive_messages(play_one_round: nil, introduction: nil, final_message: nil, show_board: nil)
         expect(board_double).to receive(:game_over?).exactly(3).times
         game_play.play_game
+      end
+    end
+
+    context "when two rounds are played" do
+      xit "alternates players" do
+
       end
     end
   end
