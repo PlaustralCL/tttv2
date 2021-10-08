@@ -14,6 +14,16 @@ class Game
     @player2 = player2
   end
 
+  def play_game
+    # introduction
+    play_one_round until board.game_over?
+    # final_message
+  end
+
+  def play_one_round
+
+  end
+
   def player_turn
     loop do
       input = verify_input(player_input)
@@ -28,7 +38,13 @@ class Game
     return user_input if choices.map(&:to_s).include?(user_input)
   end
 
+  def board_values(grid = board)
+    grid.map(&:value)
+  end
 
+  def final_message
+    puts "Thanks for playing!"
+  end
 
   private
 
@@ -37,6 +53,8 @@ class Game
     gets.chomp.downcase
   end
 
-
+  def introduction
+    puts "Welcome to Tic Tac Toe\n"
+  end
 
 end

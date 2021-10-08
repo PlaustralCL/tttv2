@@ -97,5 +97,39 @@ describe Game do
     end
   end
 
+  describe "#board_values" do
+    subject(:game_values) { described_class.new(board: board_double, player1: player1, player2: player2) }
+    let(:cellx) { double("cell", value: "X") }
+    let(:cello) { double("cell", value: "O") }
+    let(:cellb) { double("cell", value: 1) }
+    let(:grid) { [cello, cellb, cellb, cellb, cellx, cellb, cellb, cellb, cellx] }
+    let(:result) { ["O", 1, 1, 1, "X", 1, 1, 1, "X"] }
+    context "when array of cell objects is provided" do
+      it "returns array of cell values" do
+        expect(game_values.board_values(grid)).to eq(result)
+      end
+    end
+  end
+
+  describe "play_game" do
+    subject(:game_play) { described_class.new(board: board_double, player1: player1, player2: player2) }
+    context "when game is over" do
+      it "calls game_over only once" do
+        allow(board_double).to receive(:game_over?).and_return(true)
+        expect(board_double).to receive(:game_over?).once
+        game_play.play_game
+      end
+    end
+
+    context "when two rounds are played before game over" do
+      it "calls game_over? three times before exiting" do
+        allow(board_double).to receive(:game_over?).and_return(false, false, true)
+        expect(board_double).to receive(:game_over?).exactly(3).times
+        game_play.play_game
+      end
+    end
+  end
+
+
 
 end
