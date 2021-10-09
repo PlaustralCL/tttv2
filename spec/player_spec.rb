@@ -69,10 +69,9 @@ describe Player do
       let(:choices1) { [2, 3, 4, 6, 7, 8] }
       let(:choices2) { [2, 3, 4, 6, 7, 8] }
       it "completes loops and displays error message once" do
-        letter = "d"
         valid_input = "3"
         allow(board_double).to receive(:available_cells).and_return(choices1, choices2)
-        allow(player_loop).to receive(:player_input).and_return(letter, valid_input)
+        allow(player_loop).to receive(:player_input)
         allow(player_loop).to receive(:verify_input).and_return(nil, valid_input)
         expect(player_loop).to receive(:puts).with("Input Error! Please use one of the following choices: 2, 3, 4, 6, 7, 8, q").once
         player_loop.player_turn(board_double)
@@ -85,11 +84,9 @@ describe Player do
       let(:choices3) { [2, 3, 4, 6, 7, 8] }
       let(:choices4) { [2, 3, 4, 6, 7, 8] }
       it "completes loops and displays error message twice" do
-        letter = "d"
-        taken_cell = "5"
         valid_input = "3"
         allow(board_double).to receive(:available_cells).and_return(choices1, choices2, choices3, choices4)
-        allow(player_loop).to receive(:player_input).and_return(letter, taken_cell, valid_input)
+        allow(player_loop).to receive(:player_input)
         allow(player_loop).to receive(:verify_input).and_return(nil, nil, valid_input)
         expect(player_loop).to receive(:puts).with("Input Error! Please use one of the following choices: 2, 3, 4, 6, 7, 8, q").twice
         player_loop.player_turn(board_double)

@@ -38,20 +38,6 @@ class Game
     # switch players current_player.object_id == player1 ? player2 : player1
   end
 
-  def player_turn
-    loop do
-      input = verify_input(player_input)
-      return input if input
-
-      puts "Input Error! Please use one of the following choices: #{board.available_cells.push("q").join(", ")}"
-    end
-  end
-
-  def verify_input(user_input, choices = board.available_cells)
-    choices << "q"
-    return user_input if choices.map(&:to_s).include?(user_input)
-  end
-
   def board_values(grid = board.gameboard)
     grid.map(&:value)
   end
@@ -60,13 +46,7 @@ class Game
     puts "Thanks for playing!"
   end
 
-
   private
-
-  def player_input
-    puts "Please select a number (1 - 9) that is available for your turn"
-    gets.chomp.downcase
-  end
 
   def introduction
     puts "Welcome to Tic Tac Toe\n"
