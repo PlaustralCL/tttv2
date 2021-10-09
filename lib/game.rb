@@ -24,10 +24,10 @@ class Game
     show_board
     current_player = player1
     until board.game_over?
-      play_one_round(current_player)
+      break if play_one_round(current_player) == "quit"
+
       current_player = current_player == player1 ? player2 : player1
     end
-    # play_one_round(current_player) until board.game_over? # TODO: switch players between rounds
     final_message
   end
 
@@ -36,9 +36,10 @@ class Game
   end
 
   def play_one_round(current_player)
-    current_player.player_turn # add variable to track input
-    # add exit it input == "q"
-    # update board with player input (cell -> input, marker -> current_player.marker)
+    cell = current_player.player_turn
+    return "quit" if cell == "q"
+
+    board.update_board(cell.to_i, current_player.marker)
     show_board
   end
 

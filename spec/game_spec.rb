@@ -25,11 +25,12 @@ describe Game do
     subject(:game_play) { described_class.new(board: board_double, player1: player1, player2: player2) }
 
     before do
-      allow(game_play).to receive_messages(introduction: nil, final_message: nil, show_board: nil)
+      allow(game_play).to receive_messages(introduction: nil, show_board: nil, final_message: nil)
     end
 
     context "when game is over" do
       it "calls game_over only once" do
+        allow(game_play).to receive_messages(play_one_round: nil)
         allow(board_double).to receive(:game_over?).and_return(true)
         expect(board_double).to receive(:game_over?).once
         game_play.play_game
@@ -38,7 +39,7 @@ describe Game do
 
     context "when two rounds are played before game over" do
       it "calls game_over? three times before exiting" do
-        allow(game_play).to receive(:play_one_round).and_return(nil)
+        allow(game_play).to receive_messages(play_one_round: nil)
         allow(board_double).to receive(:game_over?).and_return(false, false, true)
         expect(board_double).to receive(:game_over?).exactly(3).times
         game_play.play_game
@@ -55,7 +56,11 @@ describe Game do
     end
 
     context "when input is 'q'" do
-      xit "exits the loop" do
+      it "breaks the loop" do
+        allow(board_double).to receive(:game_over?).and_return(false, false, true)
+        allow(game_play).to receive(:play_one_round).and_return("quit")
+        expect(game_play).to receive(:play_one_round).once
+        game_play.play_game
 
       end
     end
@@ -79,6 +84,7 @@ describe Game do
     context "when it it player 1's turn" do
       it "it calls player_turn for player 1" do
         allow(game_round).to receive(:show_board)
+        allow(board_double).to receive(:update_board)
         expect(player1).to receive(:player_turn).once
         game_round.play_one_round(player1)
       end
@@ -86,6 +92,7 @@ describe Game do
 
     context "when it it player 1's turn" do
       it "it calls player_turn for player 1" do
+        allow(board_double).to receive(:update_board)
         allow(game_round).to receive(:show_board)
         expect(player2).to receive(:player_turn).once
         game_round.play_one_round(player2)
@@ -93,7 +100,22 @@ describe Game do
     end
 
     context "when the player inputs 'q'" do
-      xit "returns without updating the board" do
+      it "returns without updating the board" do
+        allow(player1).to receive(:marker).and_return("X")
+        allow(player1).to receive(:player_turn).and_return("q")
+        expect(board_double).not_to receive(:update_board)
+        game_round.play_one_round(player1)
+
+      end
+    end
+
+    context "when player inputs a number" do
+      it "updates the correct cell with the marker" do
+        allow(game_round).to receive(:show_board)
+        allow(player1).to receive(:marker).and_return("X")
+        allow(player1).to receive(:player_turn).and_return("5")
+        expect(board_double).to receive(:update_board).with(5, "X")
+        game_round.play_one_round(player1)
       end
     end
   end
