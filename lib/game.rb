@@ -26,7 +26,7 @@ class Game
     final_message
   end
 
-  def show_board(display = Display.new)
+  def show_board(display = Display.new(board: board_values))
     puts display.create_visual_board
   end
 
@@ -35,7 +35,6 @@ class Game
     # add exit it input == "q"
     # update board with player input (cell -> input, marker -> current_player.marker)
     show_board(Display.new(board: board_values))
-    # switch players current_player.object_id == player1 ? player2 : player1
   end
 
   def board_values(grid = board.gameboard)
