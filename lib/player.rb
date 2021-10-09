@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Maintain information about the players
+# Maintain information about the players and methods for player actions
 class Player
   attr_reader :name, :marker
 
