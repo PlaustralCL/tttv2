@@ -48,7 +48,14 @@ class Game
   end
 
   def final_message
-    puts "Thanks for playing!"
+    winner = board.winner[0]
+    if winner == "X"
+      puts "#{player1.name} won!\n Thanks for playing!"
+    elsif winner == "Y"
+      puts "#{player2.name} won!\n Thanks for playing!"
+    else
+      puts "The game was tied.\n Thanks for playing!"
+    end
   end
 
   private

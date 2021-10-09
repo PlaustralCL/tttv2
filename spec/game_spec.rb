@@ -3,8 +3,8 @@
 require_relative "../lib/game"
 
 describe Game do
-  let(:player1) { double("player1", name: "Player1", marker: "X") }
-  let(:player2) { double("player2", name: "Player2", marker: "O") }
+  let(:player1) { double("player1", name: "Player 1", marker: "X") }
+  let(:player2) { double("player2", name: "Player 2", marker: "O") }
   let(:board_double) { double("board") }
 
   describe "#board_values" do
@@ -121,20 +121,28 @@ describe Game do
   end
 
   describe "#final_message" do
+    subject(:game_final) { described_class.new(board: board_double, player1: player1, player2: player2) }
     context "when the game is a tie" do
-      xit "shows tie message" do
-
+      it "shows tie message" do
+        tie_phrase = "The game was tied.\n Thanks for playing!\n"
+        allow(board_double).to receive(:winner).and_return("")
+        expect { game_final.final_message }.to output(tie_phrase).to_stdout
       end
     end
 
     context "when player 1 wins" do
-      xit "states player 1 won" do
-
+      it "states player 1 won" do
+        player1_phrase = "Player 1 won!\n Thanks for playing!\n"
+        allow(board_double).to receive(:winner).and_return("XXX")
+        expect { game_final.final_message }.to output(player1_phrase).to_stdout
       end
     end
 
     context "when player 2 wins" do
-      xit "states player 2 won" do
+      it "states player 2 won" do
+        player2_phrase = "Player 2 won!\n Thanks for playing!\n"
+        allow(board_double).to receive(:winner).and_return("YYY")
+        expect { game_final.final_message }.to output(player2_phrase).to_stdout
 
       end
     end
