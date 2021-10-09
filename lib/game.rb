@@ -22,19 +22,24 @@ class Game
   def play_game
     introduction
     show_board
-    play_one_round until board.game_over? # TODO: switch players between rounds
+    current_player = player1
+    until board.game_over?
+      play_one_round(current_player)
+      current_player = current_player == player1 ? player2 : player1
+    end
+    # play_one_round(current_player) until board.game_over? # TODO: switch players between rounds
     final_message
   end
 
-  def show_board(display = Display.new(board: board_values))
+  def show_board(display = Display.new(board_values))
     puts display.create_visual_board
   end
 
-  def play_one_round
-    player_turn # add variable to track input
+  def play_one_round(current_player)
+    current_player.player_turn # add variable to track input
     # add exit it input == "q"
     # update board with player input (cell -> input, marker -> current_player.marker)
-    show_board(Display.new(board: board_values))
+    show_board
   end
 
   def board_values(grid = board.gameboard)

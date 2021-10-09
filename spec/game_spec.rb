@@ -3,8 +3,8 @@
 require_relative "../lib/game"
 
 describe Game do
-  let(:player1) { double("player", name: "Player1", marker: "X") }
-  let(:player2) { double("player", name: "Player2", marker: "O") }
+  let(:player1) { double("player1", name: "Player1", marker: "X") }
+  let(:player2) { double("player2", name: "Player2", marker: "O") }
   let(:board_double) { double("board") }
 
   describe "#board_values" do
@@ -25,7 +25,7 @@ describe Game do
     subject(:game_play) { described_class.new(board: board_double, player1: player1, player2: player2) }
 
     before do
-      allow(game_play).to receive_messages(play_one_round: nil, introduction: nil, final_message: nil, show_board: nil)
+      allow(game_play).to receive_messages(introduction: nil, final_message: nil, show_board: nil)
     end
 
     context "when game is over" do
@@ -37,8 +37,8 @@ describe Game do
     end
 
     context "when two rounds are played before game over" do
-      let(:display) { double("display") }
       it "calls game_over? three times before exiting" do
+        allow(game_play).to receive(:play_one_round).and_return(nil)
         allow(board_double).to receive(:game_over?).and_return(false, false, true)
         expect(board_double).to receive(:game_over?).exactly(3).times
         game_play.play_game
@@ -46,8 +46,11 @@ describe Game do
     end
 
     context "when two rounds are played" do
-      xit "alternates players" do
-
+      it "alternates players" do
+        allow(board_double).to receive(:game_over?).and_return(false, false, true)
+        expect(game_play).to receive(:play_one_round).with(player1)
+        expect(game_play).to receive(:play_one_round).with(player2)
+        game_play.play_game
       end
     end
 
@@ -72,15 +75,20 @@ describe Game do
   end
 
   describe "#play_one_round" do
+    subject(:game_round) { described_class.new(board: board_double, player1: player1, player2: player2) }
     context "when it it player 1's turn" do
-      xit "it calls player_turn for player 1" do
-
+      it "it calls player_turn for player 1" do
+        allow(game_round).to receive(:show_board)
+        expect(player1).to receive(:player_turn).once
+        game_round.play_one_round(player1)
       end
     end
 
     context "when it it player 1's turn" do
-      xit "it calls player_turn for player 1" do
-
+      it "it calls player_turn for player 1" do
+        allow(game_round).to receive(:show_board)
+        expect(player2).to receive(:player_turn).once
+        game_round.play_one_round(player2)
       end
     end
 
@@ -90,6 +98,25 @@ describe Game do
     end
   end
 
+  describe "#final_message" do
+    context "when the game is a tie" do
+      xit "shows tie message" do
+
+      end
+    end
+
+    context "when player 1 wins" do
+      xit "states player 1 won" do
+
+      end
+    end
+
+    context "when player 2 wins" do
+      xit "states player 2 won" do
+
+      end
+    end
+  end
 
 
 
