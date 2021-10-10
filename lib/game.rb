@@ -32,6 +32,7 @@ class Game
   end
 
   def show_board(display = Display.new(board: board_values))
+    puts
     puts display.create_visual_board
   end
 
@@ -62,6 +63,7 @@ class Game
 
   def introduction
     puts "Welcome to Tic Tac Toe\n"
+    puts
   end
 
 end
