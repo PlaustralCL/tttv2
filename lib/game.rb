@@ -40,6 +40,9 @@ class Game
     cell = current_player.player_turn(board)
     return "quit" if cell == "q"
 
+    # update_board is using cell.to_i - 1 instead of cell.to_i to account for
+    # the difference between the board array indexing from 0 and the display
+    # board starting from 1.
     board.update_board(cell.to_i - 1, current_player.marker)
     show_board
   end
@@ -65,5 +68,4 @@ class Game
     puts "Welcome to Tic Tac Toe\n"
     puts
   end
-
 end
