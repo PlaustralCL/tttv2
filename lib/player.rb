@@ -11,16 +11,16 @@ class Player
 
   def player_turn(board = Board.new)
     loop do
-      available_cells = board.available_cells
-      input = verify_input(player_input, available_cells)
+      available_choices = board.available_cells
+      input = verify_input(player_input, available_choices)
       return input if input
 
-      puts "Input Error! Please use one of the following choices: #{available_cells.push("q").join(", ")}"
+      puts "Input Error! Please use one of the following choices: #{available_choices.join(", ")}"
     end
   end
 
   def verify_input(user_input, choices = nil)
-    choices << "q"
+    choices << "q" unless choices.include?("q")
     return user_input if choices.map(&:to_s).include?(user_input)
   end
 

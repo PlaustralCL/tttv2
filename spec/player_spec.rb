@@ -66,11 +66,10 @@ describe Player do
     end
 
     context "when user input enters incorrect choice once, then a valid choice" do
-      let(:choices1) { [2, 3, 4, 6, 7, 8] }
-      let(:choices2) { [2, 3, 4, 6, 7, 8] }
+      let(:choices1) { [2, 3, 4, 6, 7, 8, "q"] }
       it "completes loops and displays error message once" do
         valid_input = "3"
-        allow(board_double).to receive(:available_cells).and_return(choices1, choices2)
+        allow(board_double).to receive(:available_cells).and_return(choices1)
         allow(player_loop).to receive(:player_input)
         allow(player_loop).to receive(:verify_input).and_return(nil, valid_input)
         expect(player_loop).to receive(:puts).with("Input Error! Please use one of the following choices: 2, 3, 4, 6, 7, 8, q").once
@@ -79,13 +78,10 @@ describe Player do
     end
 
     context "when user inputs two incorrect values, then a valid input" do
-      let(:choices1) { [2, 3, 4, 6, 7, 8] }
-      let(:choices2) { [2, 3, 4, 6, 7, 8] }
-      let(:choices3) { [2, 3, 4, 6, 7, 8] }
-      let(:choices4) { [2, 3, 4, 6, 7, 8] }
+      let(:choices1) { [2, 3, 4, 6, 7, 8, "q"] }
       it "completes loops and displays error message twice" do
         valid_input = "3"
-        allow(board_double).to receive(:available_cells).and_return(choices1, choices2, choices3, choices4)
+        allow(board_double).to receive(:available_cells).and_return(choices1)
         allow(player_loop).to receive(:player_input)
         allow(player_loop).to receive(:verify_input).and_return(nil, nil, valid_input)
         expect(player_loop).to receive(:puts).with("Input Error! Please use one of the following choices: 2, 3, 4, 6, 7, 8, q").twice
