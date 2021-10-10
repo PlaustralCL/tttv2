@@ -43,8 +43,6 @@ describe Board do
     end
 
     context "when game is won" do
-      # let(:horz_winner_o) { [cellx, cellx, cellb, cello, cello, cellb, cello, cello, cello] }
-      # subject(:horz_board_winner_o) { described_class.new(horz_winner_o) }
       let(:diag_winner_board) { [cellx, cellx, cello, cellb, cello, cellb, cello, cellb, cellb] }
       subject(:diag_winner) { described_class.new(diag_winner_board) }
       it "returns true" do
@@ -56,7 +54,6 @@ describe Board do
       subject(:game_board) { described_class.new }
       it "returns false" do
         expect(game_board.game_over?).to be false
-
       end
     end
   end
