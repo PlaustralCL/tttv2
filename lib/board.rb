@@ -24,24 +24,26 @@ class Board
   end
 
   def horizontal_winner?
-    game_won?
+    find_winner
+    winner == "XXX" || winner == "OOO"
   end
 
   def vertical_winner?
-    game_won?(gameboard.each_slice(3).to_a.transpose.flatten)
+    find_winner(gameboard.each_slice(3).to_a.transpose.flatten)
+    winner == "XXX" || winner == "OOO"
   end
 
   def diagonal_winner?
     board = gameboard.each_slice(3).to_a
     first_diag = (0..2).map { |i| board[i][i] }
     second_diag = (0..2).map { |i| board[2 - i][i] }
-    game_won?(first_diag + second_diag)
+    find_winner(first_diag + second_diag)
+    winner == "XXX" || winner == "OOO"
   end
 
-  def game_won?(board = gameboard)
+  def find_winner(board = gameboard)
     board_values = board.map(&:value).each_slice(3)
     @winner = board_values.select { |row| row.join == "XXX" || row.join == "OOO" }.join
-    winner == "XXX" || winner == "OOO"
   end
 
   def update_board(cell, marker)
