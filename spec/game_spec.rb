@@ -114,7 +114,7 @@ describe Game do
         allow(game_round).to receive(:show_board)
         allow(player1).to receive(:marker).and_return("X")
         allow(player1).to receive(:player_turn).and_return("5")
-        expect(board_double).to receive(:update_board).with(5, "X")
+        expect(board_double).to receive(:update_board).with(4, "X")
         game_round.play_one_round(player1)
       end
     end
