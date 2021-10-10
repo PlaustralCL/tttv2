@@ -25,7 +25,7 @@ describe Display do
   describe "#add_color" do
     subject(:color_display) { described_class.new(board: ["X", 2, "O"]) }
     let(:updated_boad) { ["\e[0;34mX\e[0m", 2, "\e[0;31mO\e[0m"] }
-    context "when X, Y, and number are present" do
+    context "when X, O, and number are present" do
       it "adds the proper color" do
         expect(color_display.add_color).to eq(updated_boad)
       end

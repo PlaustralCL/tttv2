@@ -18,7 +18,7 @@ class Display
   end
 
   def add_color
-    color_codes = { "X" => "blue", "O" => "red" }
+    color_codes = { "X" => "bold_light_blue", "O" => "bold_red" }
     @board = board.map do |marker|
       if %w[X O].include?(marker)
         marker.public_send(color_codes[marker])

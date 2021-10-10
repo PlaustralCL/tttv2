@@ -25,7 +25,7 @@ class Player
   end
 
   def player_input
-    puts "Please select a number (1 - 9) that is available for your turn"
+    puts "#{name}, please select a number (1 - 9) that is available for your turn"
     gets.chomp.downcase
   end
 end

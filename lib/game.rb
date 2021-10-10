@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# require_relative "board"
-# require_relative "display"
-# require_relative "player"
-# require_relative "cell"
+require_relative "board"
+require_relative "display"
+require_relative "player"
+require_relative "cell"
 
 # Control the flow of the game by coordinating the other classes
 class Game
@@ -31,7 +31,7 @@ class Game
     final_message
   end
 
-  def show_board(display = Display.new(board_values))
+  def show_board(display = Display.new(board: board_values))
     puts display.create_visual_board
   end
 
@@ -39,7 +39,7 @@ class Game
     cell = current_player.player_turn
     return "quit" if cell == "q"
 
-    board.update_board(cell.to_i, current_player.marker)
+    board.update_board(cell.to_i - 1, current_player.marker)
     show_board
   end
 
@@ -50,11 +50,11 @@ class Game
   def final_message
     winner = board.winner[0]
     if winner == "X"
-      puts "#{player1.name} won!\n Thanks for playing!"
-    elsif winner == "Y"
-      puts "#{player2.name} won!\n Thanks for playing!"
+      puts "#{player1.name} won!\nThanks for playing!"
+    elsif winner == "O"
+      puts "#{player2.name} won!\nThanks for playing!"
     else
-      puts "The game was tied.\n Thanks for playing!"
+      puts "The game was tied.\nThanks for playing!"
     end
   end
 

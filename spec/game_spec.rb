@@ -124,7 +124,7 @@ describe Game do
     subject(:game_final) { described_class.new(board: board_double, player1: player1, player2: player2) }
     context "when the game is a tie" do
       it "shows tie message" do
-        tie_phrase = "The game was tied.\n Thanks for playing!\n"
+        tie_phrase = "The game was tied.\nThanks for playing!\n"
         allow(board_double).to receive(:winner).and_return("")
         expect { game_final.final_message }.to output(tie_phrase).to_stdout
       end
@@ -132,7 +132,7 @@ describe Game do
 
     context "when player 1 wins" do
       it "states player 1 won" do
-        player1_phrase = "Player 1 won!\n Thanks for playing!\n"
+        player1_phrase = "Player 1 won!\nThanks for playing!\n"
         allow(board_double).to receive(:winner).and_return("XXX")
         expect { game_final.final_message }.to output(player1_phrase).to_stdout
       end
@@ -140,8 +140,8 @@ describe Game do
 
     context "when player 2 wins" do
       it "states player 2 won" do
-        player2_phrase = "Player 2 won!\n Thanks for playing!\n"
-        allow(board_double).to receive(:winner).and_return("YYY")
+        player2_phrase = "Player 2 won!\nThanks for playing!\n"
+        allow(board_double).to receive(:winner).and_return("OOO")
         expect { game_final.final_message }.to output(player2_phrase).to_stdout
 
       end
