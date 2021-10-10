@@ -14,7 +14,7 @@ describe Display do
 
     context "when given a game with markers" do
       subject(:updated_display) { described_class.new(board: ["X", "X", "O", 4, "O", 6, 7, "O", 9]) }
-      let(:updated_string) { " X | X | O\n---+---+----\n 4 | O | 6\n---+---+----\n 7 | O | 9\n" }
+      let(:updated_string) { " \e[0;34mX\e[0m | \e[0;34mX\e[0m | \e[0;31mO\e[0m\n---+---+----\n 4 | \e[0;31mO\e[0m | 6\n---+---+----\n 7 | \e[0;31mO\e[0m | 9\n" }
 
       it "makes the proper string board" do
         expect(updated_display.create_visual_board).to eq(updated_string)
@@ -22,4 +22,13 @@ describe Display do
     end
   end
 
+  describe "#add_color" do
+    subject(:color_display) { described_class.new(board: ["X", 2, "O"]) }
+    let(:updated_boad) { ["\e[0;34mX\e[0m", 2, "\e[0;31mO\e[0m"] }
+    context "when X, Y, and number are present" do
+      it "adds the proper color" do
+        expect(color_display.add_color).to eq(updated_boad)
+      end
+    end
+  end
 end
