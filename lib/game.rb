@@ -36,7 +36,7 @@ class Game
   end
 
   def play_one_round(current_player)
-    cell = current_player.player_turn
+    cell = current_player.player_turn(board)
     return "quit" if cell == "q"
 
     board.update_board(cell.to_i - 1, current_player.marker)
