@@ -12,7 +12,9 @@ since the first time attempting this I was able to make the code much cleaner.
 One significant difference that made coding this easier was modeling the board
 as just a single array. The first time I made this I kepth everything in a 2d array,
 which was much more difficult to work with.
-[Live version of the game]()
+
+[Live version of the game](https://replit.com/@PlaustralCL/tttv2#.replit)
+
 [Repository](https://github.com/PlaustralCL/tttv2)
 
 ## Learning
